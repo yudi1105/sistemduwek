@@ -437,7 +437,7 @@
                               <td><?php echo $detail['dibayar'] ?></td>
                               <td><?php echo $status_bayar ?></td>
                               <td>
-                                <a href="bayar.php?tagihanbebas=<?php echo $bebas['idTagihanBebas']?>" class="btn btn-danger btn-xs"><i class="fa fa-plus"></i> Bayar</a>
+                                <a href="bayarbebas.php?tagihanbebas=<?php echo $bebas['idTagihanBebas']?>" class="btn btn-danger btn-xs"><i class="fa fa-plus"></i> Bayar</a>
                               </td>
                               <td>
                                 <a class="btn btn-success btn-xs" href=""><span class="fa fa-print"> Cetak Pembayaran</span></a>

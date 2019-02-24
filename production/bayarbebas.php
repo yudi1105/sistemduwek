@@ -209,9 +209,12 @@
           <div class="row">
             <div class="panel-body">
               <div class="row">
+                
                 <?php   
-
-                            $ambil=$koneksi->query("SELECT tagihan_bulanan.*, siswa.nis,siswa.nisn,siswa.namasiswa,siswa.kelas,jenisbayar.keteranganpos FROM tagihan_bulanan INNER JOIN siswa ON tagihan_bulanan.nis = siswa.nis INNER JOIN jenisbayar ON tagihan_bulanan.idJenisBayar = jenisbayar.idjenisbayar  WHERE idTagihanBulanan = '$_GET[tagihanbulanan]'");
+                           $ambil=$koneksi->query("SELECT SUM(nominal) as total_tagihan FROM detail_tagihan_bebas WHERE idTagihanBebas = '$_GET[tagihanbebas]'");
+                            $tag = $ambil->fetch_assoc();
+                            $total_tagihan = $tag['total_tagihan'];
+                            $ambil=$koneksi->query("SELECT tagihan_bebas.*, siswa.nis,siswa.nisn,siswa.namasiswa,siswa.kelas,jenisbayar.keteranganpos,jenisbayar.tahunajaran FROM tagihan_bebas INNER JOIN siswa ON tagihan_bebas.nis = siswa.nis INNER JOIN jenisbayar ON tagihan_bebas.idJenisBayar = jenisbayar.idjenisbayar  WHERE idTagihanBebas = '$_GET[tagihanbebas]'");
                             $tag = $ambil->fetch_assoc();
                        
 
@@ -236,7 +239,9 @@
                         <tr>
                           <td width="100px">Tahun Ajaran</td>
                           <td width="4px">:</td>
-                          <td>x</td>
+                          <td>
+                            <?php echo $tag['tahunajaran']; ?>
+                          </td>
                         </tr>
                         <tr>
                           <td width="100px">NIS</td>
@@ -269,7 +274,9 @@
                         <tr>
                           <td width="100px">Total Tagihan</td>
                           <td width="4px">:</td>
-                          <td>x</td>
+                          <td>
+                             <?php echo $total_tagihan ?>
+                          </td>
                         </tr>
 
                       </table>
@@ -303,29 +310,38 @@
                         </thead>
 
                         <tbody>
+                        <?php $no=1; ?>
+                          <?php  
+
+                           $ambil1=$koneksi->query("SELECT * FROM detail_tagihan_bebas WHERE idTagihanBebas=$_GET[tagihanbebas]");
+                              
+                            ?>
 
 
+                          <?php while($det = $ambil1->fetch_assoc()){
 
-
-
+                              ?>
                           <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td align="center">
-
+                            <td><?php echo $no; ?></td>
+                            <td>
+                              <?php echo $det['tanggal'] ?>
                             </td>
+                            <td><?php echo $det['dibayar']; ?></td>
+                            <td><?php echo $det['keterangan']; ?></td>
+                            <td width="150">
+                              <a class="btn btn-danger btn-xs" href=""><span class="fa fa-close"></span></a>
 
-
+                              <a class="btn btn-success btn-xs" href=""><span class="fa fa-print"> Print</span></a>
+                            </td>
                           </tr>
                           <tr class="success">
-                            <td colspan="2">
-                              <b>Total Bayar</b>
+                            <td colspan="3">
+                              <b>Total Bayar :</b>
+                              <b class="pull-right">Rp.<?php echo number_format( $det['dibayar']); ?></b>
                             </td>
-                            <td align="right"></td>
+                            
                             <td colspan="2">
-                              <b>Tunggakan : </b>
+                              <b>Tunggakan : <?php echo number_format($det['sisa']); ?></b>
                             </td>
                           </tr>
                           <tr class="warning">
@@ -337,11 +353,15 @@
                             <form method="post" action class="form-horizontal"></form>
                             <input type="hidden" name="idTagihanBebas" class="form-control" value="">
                             <td colspan="2">
-                              <input type="text" class="form-control datetimepicker" name="tglbayar" value="" readonly>
+                              <input type="" class="form-control datetimepicker" name="tglbayar" value="<?php 
+
+//kombinasi format tanggal dan jam
+echo date('d-m-Y');
+?>" readonly>
                             </td>
                             <td>
                               <input type="hidden" id="sisa" name="sisa" value="">
-                              <input type="text" id="hitungbayaran" name="jumlahbayar" class="form-control" required>
+                              <input type="text" id="hitungbayaran" name="jumlahbayar" class="form-control" value="<?php echo number_format($det['nominal']); ?>" required>
                             </td>
                             <td>
                               <input type="text" class="form-control" name="ketbayar" required>
@@ -350,13 +370,17 @@
                               <input type="submit" class="btn btn-danger" name="simpanbayar" value="bayar">
                             </td>
                           </tr>
+
                         </tbody>
                       </table>
-
+  <?php $no++ ?>
+                        <?php } ?>
                     </div>
                   </div>
                 </div>
         </form>
+        
+      
       </div>
     </div>
   </div>

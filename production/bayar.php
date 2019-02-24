@@ -216,7 +216,6 @@
                             $ambil=$koneksi->query("SELECT tagihan_bulanan.*, siswa.nis,siswa.nisn,siswa.namasiswa,siswa.kelas,jenisbayar.keteranganpos,jenisbayar.tahunajaran FROM tagihan_bulanan INNER JOIN siswa ON tagihan_bulanan.nis = siswa.nis INNER JOIN jenisbayar ON tagihan_bulanan.idJenisBayar = jenisbayar.idjenisbayar  WHERE idTagihanBulanan = '$_GET[tagihanbulanan]'");
                             $tag = $ambil->fetch_assoc();
                        
-
                     ?>
 
                 <div class="col-md-5">
@@ -337,11 +336,9 @@
                               <a class="btn btn-success btn-xs" href="prosestransaksi.php?&id=<?php echo $det['idDetailTagihanBulanan']?>&act=bayar&idtagihan=<?php echo $_GET['tagihanbulanan']?>"><span
                                   class="fa fa-check"></span></a>
                               <?php }else{ ?>
-                              <a class="btn btn-danger btn-xs" href="prosestransaksi.php?&id=<?php echo $det['idDetailTagihanBulanan']?>&act=batal&idtagihan=<?php echo $_GET['tagihanbulanan']?>"><span
-                                  class="fa fa-close"></span></a>
+                              <a class="btn btn-danger btn-xs" href="prosestransaksi.php?&id=<?php echo $det['idDetailTagihanBulanan']?>&act=batal&idtagihan=<?php echo $_GET['tagihanbulanan']?>"><span class="fa fa-close"></span></a>
 
-                              <a class="btn btn-primary btn-xs" href="cetak.php?id=<?php echo $det['idDetailTagihanBulanan']?>&idtagihan=<?php echo $det['idTagihanBulanan']?>"><span
-                                  class="fa fa-print"> Print</span></a>
+                              <a class="btn btn-primary btn-xs" href="cetak.php?id=<?php echo $det['idDetailTagihanBulanan']?>&idtagihan=<?php echo $det['idTagihanBulanan']?>"><span class="fa fa-print"> Print</span></a>
 
                               <?php } ?>
                             </td>
