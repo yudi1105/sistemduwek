@@ -210,8 +210,10 @@
             <div class="panel-body">
               <div class="row">
                 <?php   
-
-                            $ambil=$koneksi->query("SELECT tagihan_bulanan.*, siswa.nis,siswa.nisn,siswa.namasiswa,siswa.kelas,jenisbayar.keteranganpos FROM tagihan_bulanan INNER JOIN siswa ON tagihan_bulanan.nis = siswa.nis INNER JOIN jenisbayar ON tagihan_bulanan.idJenisBayar = jenisbayar.idjenisbayar  WHERE idTagihanBulanan = '$_GET[tagihanbulanan]'");
+                            $ambil=$koneksi->query("SELECT SUM(nominal) as total_tagihan FROM detail_tagihan_bulanan WHERE idTagihanBulanan = '$_GET[tagihanbulanan]'");
+                            $tag = $ambil->fetch_assoc();
+                            $total_tagihan = $tag['total_tagihan'];
+                            $ambil=$koneksi->query("SELECT tagihan_bulanan.*, siswa.nis,siswa.nisn,siswa.namasiswa,siswa.kelas,jenisbayar.keteranganpos,jenisbayar.tahunajaran FROM tagihan_bulanan INNER JOIN siswa ON tagihan_bulanan.nis = siswa.nis INNER JOIN jenisbayar ON tagihan_bulanan.idJenisBayar = jenisbayar.idjenisbayar  WHERE idTagihanBulanan = '$_GET[tagihanbulanan]'");
                             $tag = $ambil->fetch_assoc();
                        
 
@@ -236,7 +238,9 @@
                         <tr>
                           <td width="100px">Tahun Ajaran</td>
                           <td width="4px">:</td>
-                          <td>x</td>
+                          <td>
+                            <?php echo $tag['tahunajaran']; ?>
+                          </td>
                         </tr>
                         <tr>
                           <td width="100px">NIS</td>
@@ -269,7 +273,9 @@
                         <tr>
                           <td width="100px">Total Tagihan</td>
                           <td width="4px">:</td>
-                          <td>x</td>
+                          <td>
+                          <?php echo $total_tagihan ?>
+                          </td>
                         </tr>
 
                       </table>

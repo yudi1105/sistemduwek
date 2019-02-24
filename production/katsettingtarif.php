@@ -370,7 +370,7 @@
                                     //cek data jika sudah ada
                                     $ambilcek = $koneksi->query("SELECT COUNT(*) as cek FROM tagihan_bebas WHERE idJenisBayar = $_GET[id] AND nis = $siswa[nis]")->fetch_assoc();
 
-                                    if ($ambilcek[cek] == 0) {
+                                    if ($ambilcek['cek'] == 0) {
                                       //insert table tagihan bulanan
                                       $koneksi->query("INSERT INTO tagihan_bebas (idJenisBayar, nis)
                                                         VALUES ($_GET[id], $siswa[nis])");
@@ -385,11 +385,10 @@
                                     }else{
                                       continue;
                                     }
-
                                   }
                               
-                                  echo "<script>alert('Data Telah Di Simpan');</script>";
-                                  echo "<script>location='jenisbayar.php';</script>"; 
+                                  // echo "<script>alert('Data Telah Di Simpan');</script>";
+                                  // echo "<script>location='jenisbayar.php';</script>"; 
                               }
                               ?>
                           </div>
