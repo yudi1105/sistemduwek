@@ -322,8 +322,9 @@
                             <?php  
                             $katsettingtarif = $_GET["katkelas"];
                             $ambil=$koneksi->query("SELECT siswa.*,kelas.namakelas FROM siswa ,kelas WHERE siswa.kelas = kelas.namakelas AND siswa.kelas ='$katsettingtarif'");
-                            while($pecah = $ambil->fetch_assoc()){
+                          
                             ?>
+                             <?php $no=1; ?>
                              <thead>
                                <tr>
                                  <th>No.</th>
@@ -334,23 +335,24 @@
                                </tr>
 
                              </thead>
-                                <?php $no=1; ?>
-                                 <?php while($datasiswa = $ambil -> fetch_assoc()){ ?>
+                               
+                                <?php while($pecah = $ambil->fetch_assoc()){
+                            ?>
 
                              <tbody>
 
                                <tr>
                                  <td><?php echo $no; ?></td>
-                                 <td><?php echo $datasiswa['nis'] ?></td>
-                                 <td><?php echo $datasiswa['namasiswa'] ?></td>
-                                 <td><?php echo $datasiswa['kelas'] ?></td>
+                                 <td><?php echo $pecah['nis'] ?></td>
+                                 <td><?php echo $pecah['namasiswa'] ?></td>
+                                 <td><?php echo $pecah['kelas'] ?></td>
                                  <td>
                                    Rp.<input id="besartagihan" type="number" name="besartagihan" class="form-control" required>
                                  </td>
                                </tr>
                                <?php $no++; ?>
                                <?php } ?>
-                             <?php } ?>
+                             
                              </tbody>
                              
                            </table>
