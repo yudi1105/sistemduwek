@@ -205,163 +205,177 @@
         </div>
 
         <hr>
-        <form method="post">
-          <div class="row">
-            <div class="panel-body">
-              <div class="row">
-                
-                <?php   
-                           $ambil=$koneksi->query("SELECT SUM(nominal) as total_tagihan FROM detail_tagihan_bebas WHERE idTagihanBebas = '$_GET[tagihanbebas]'");
-                            $tag = $ambil->fetch_assoc();
-                            $total_tagihan = $tag['total_tagihan'];
+        <!-- <form method="post"> -->
+        <div class="row">
+          <div class="panel-body">
+            <div class="row">
+
+              <?php   
+                          //  $ambil=$koneksi->query("SELECT tagihan_bebas.nominal as total_tagihan FROM tagihan_bebas WHERE idTagihanBebas = '$_GET[tagihanbebas]'");
+                          //   $tag = $ambil->fetch_assoc();
+                          //   $total_tagihan = $tag['total_tagihan'];
                             $ambil=$koneksi->query("SELECT tagihan_bebas.*, siswa.nis,siswa.nisn,siswa.namasiswa,siswa.kelas,jenisbayar.keteranganpos,jenisbayar.tahunajaran FROM tagihan_bebas INNER JOIN siswa ON tagihan_bebas.nis = siswa.nis INNER JOIN jenisbayar ON tagihan_bebas.idJenisBayar = jenisbayar.idjenisbayar  WHERE idTagihanBebas = '$_GET[tagihanbebas]'");
                             $tag = $ambil->fetch_assoc();
+                            $total_tagihan = $tag['nominal'];
                        
 
                     ?>
 
-                <div class="col-md-5">
-                  <div class="panel panel-primary">
+              <div class="col-md-5">
+                <div class="panel panel-primary">
 
-                    <div class="panel-heading">
-                      <h1 class="panel-title"><strong> Informasi Tagihan </strong></h1>
-                    </div>
+                  <div class="panel-heading">
+                    <h1 class="panel-title"><strong> Informasi Tagihan </strong></h1>
+                  </div>
 
-                    <div class="panel-body">
-                      <table class="table table-striped">
-                        <tr>
-                          <td width="100px">Jenis</td>
-                          <td width="4px">:</td>
-                          <td>
-                            <?php echo $tag['keteranganpos']; ?>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="100px">Tahun Ajaran</td>
-                          <td width="4px">:</td>
-                          <td>
-                            <?php echo $tag['tahunajaran']; ?>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="100px">NIS</td>
-                          <td width="4px">:</td>
-                          <td>
-                            <?php echo $tag['nis']; ?>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="100px">NISN</td>
-                          <td width="4px">:</td>
-                          <td>
-                            <?php echo $tag['nisn']; ?>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="100px">Nama Siswa</td>
-                          <td width="4px">:</td>
-                          <td>
-                            <?php echo $tag['namasiswa']; ?>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="100px">Kelas</td>
-                          <td width="4px">:</td>
-                          <td>
-                            <?php echo $tag['kelas'] ?>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="100px">Total Tagihan</td>
-                          <td width="4px">:</td>
-                          <td>
-                             <?php echo $total_tagihan ?>
-                          </td>
-                        </tr>
+                  <div class="panel-body">
+                    <table class="table table-striped">
+                      <tr>
+                        <td width="100px">Jenis</td>
+                        <td width="4px">:</td>
+                        <td>
+                          <?php echo $tag['keteranganpos']; ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="100px">Tahun Ajaran</td>
+                        <td width="4px">:</td>
+                        <td>
+                          <?php echo $tag['tahunajaran']; ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="100px">NIS</td>
+                        <td width="4px">:</td>
+                        <td>
+                          <?php echo $tag['nis']; ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="100px">NISN</td>
+                        <td width="4px">:</td>
+                        <td>
+                          <?php echo $tag['nisn']; ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="100px">Nama Siswa</td>
+                        <td width="4px">:</td>
+                        <td>
+                          <?php echo $tag['namasiswa']; ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="100px">Kelas</td>
+                        <td width="4px">:</td>
+                        <td>
+                          <?php echo $tag['kelas'] ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="100px">Total Tagihan</td>
+                        <td width="4px">:</td>
+                        <td>
+                          <?php echo $total_tagihan ?>
+                        </td>
+                      </tr>
 
-                      </table>
-                      <a href="pembayaransiswa.php" class="pull-right btn btn-primary"><i class="fa fa-share"></i>
-                        Kembali</a>
-
-                    </div>
-
+                    </table>
+                    <a href="pembayaransiswa.php" class="pull-right btn btn-primary"><i class="fa fa-share"></i>
+                      Kembali</a>
 
                   </div>
+
+
                 </div>
+              </div>
 
-                <div class="col-md-7">
-                  <div class="panel panel-warning">
-                    <div class="panel-heading">
-                      <h1 class="panel-title"><strong> Pembayaran Tagihan </strong></h1>
-                    </div>
+              <div class="col-md-7">
+                <div class="panel panel-warning">
+                  <div class="panel-heading">
+                    <h1 class="panel-title"><strong> Pembayaran Tagihan </strong></h1>
+                  </div>
 
-                    <div class="panel-body">
-                      <table class="table table-bordered table-hover table-striped">
-                        <thead>
-                          <tr>
-                            <th>No.</th>
-                            <th>Tanggal</th>
-                            <th>Jumlah Bayar</th>
-                            <th>Keterangan</th>
-                            <th>Aksi</th>
+                  <div class="panel-body">
+                    <table class="table table-bordered table-hover table-striped">
+                      <thead>
+                        <tr>
+                          <th>No.</th>
+                          <th>Tanggal</th>
+                          <th>Jumlah Bayar</th>
+                          <th>Keterangan</th>
+                          <th>Aksi</th>
 
-                          </tr>
+                        </tr>
 
-                        </thead>
+                      </thead>
 
-                        <tbody>
+                      <tbody>
                         <?php $no=1; ?>
-                          <?php  
+                        <?php  
 
                            $ambil1=$koneksi->query("SELECT * FROM detail_tagihan_bebas WHERE idTagihanBebas=$_GET[tagihanbebas]");
                               
                             ?>
 
 
-                          <?php while($det = $ambil1->fetch_assoc()){
+                        <?php 
+                            $nominal_result = 0;
+                            while($det = $ambil1->fetch_assoc()){
+                              $nominal_result += $det['nominal'];
+                          ?>
+                        <tr>
+                          <td>
+                            <?php echo $no; ?>
+                          </td>
+                          <td>
+                            <?php echo $det['tanggal'] ?>
+                          </td>
+                          <td>
+                            <?php echo $det['nominal']; ?>
+                          </td>
+                          <td>
+                            <?php echo $det['keterangan']; ?>
+                          </td>
+                          <td width="150">
+                            <a class="btn btn-danger btn-xs" href=""><span class="fa fa-close"></span></a>
 
-                              ?>
-                          <tr>
-                            <td><?php echo $no; ?></td>
-                            <td>
-                              <?php echo $det['tanggal'] ?>
-                            </td>
-                            <td><?php echo $det['dibayar']; ?></td>
-                            <td><?php echo $det['keterangan']; ?></td>
-                            <td width="150">
-                              <a class="btn btn-danger btn-xs" href=""><span class="fa fa-close"></span></a>
+                            <a class="btn btn-success btn-xs" href=""><span class="fa fa-print"> Print</span></a>
+                          </td>
+                        </tr>
 
-                              <a class="btn btn-success btn-xs" href=""><span class="fa fa-print"> Print</span></a>
-                            </td>
-                          </tr>
-                          <tr class="success">
-                            <td colspan="3">
-                              <b>Total Bayar :</b>
-                              <b class="pull-right">Rp.<?php echo number_format( $det['dibayar']); ?></b>
-                            </td>
-                            
-                            <td colspan="2">
-                              <b>Tunggakan : <?php echo number_format($det['sisa']); ?></b>
-                            </td>
-                          </tr>
-                          <tr class="warning">
-                            <td colspan="5">
-                              <b>Tambah Pembayaran</b>
-                            </td>
-                          </tr>
-                          <tr>
-                            <form method="post" action class="form-horizontal"></form>
-                            <input type="hidden" name="idTagihanBebas" class="form-control" value="">
+                        <?php $no++ ?>
+                        <?php } ?>
+                        <tr class="success">
+                          <td colspan="3">
+                            <b>Total Bayar :</b>
+                            <b class="pull-right">Rp.
+                              <?php echo number_format( $nominal_result); ?></b>
+                          </td>
+
+                          <td colspan="2">
+                            <b>Tunggakan :
+                              <?php echo number_format($total_tagihan-$nominal_result); ?></b>
+                          </td>
+                        </tr>
+                        <tr class="warning">
+                          <td colspan="5">
+                            <b>Tambah Pembayaran</b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <form method="post" action="tambahbayarbebas.php" class="form-horizontal">
+                            <input type="hidden" name="idTagihanBebas" class="form-control" value="<?php echo $_GET['tagihanbebas'];?>">
                             <td colspan="2">
                               <input type="" class="form-control datetimepicker" name="tglbayar" value="<?php 
-
-//kombinasi format tanggal dan jam
-echo date('d-m-Y');
-?>" readonly>
+                              //kombinasi format tanggal dan jam
+                              echo date('d-m-Y');
+                              ?>" readonly>
                             </td>
                             <td>
                               <input type="hidden" id="sisa" name="sisa" value="">
-                              <input type="text" id="hitungbayaran" name="jumlahbayar" class="form-control" value="<?php echo number_format($det['nominal']); ?>" required>
+                              <input type="text" id="hitungbayaran" name="jumlahbayar" class="form-control" value="<?php echo $total_tagihan-$nominal_result; ?>"
+                                required>
                             </td>
                             <td>
                               <input type="text" class="form-control" name="ketbayar" required>
@@ -369,23 +383,21 @@ echo date('d-m-Y');
                             <td>
                               <input type="submit" class="btn btn-danger" name="simpanbayar" value="bayar">
                             </td>
-                          </tr>
-
-                        </tbody>
-                      </table>
-  <?php $no++ ?>
-                        <?php } ?>
-                    </div>
+                        </tr>
+                        </form>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-        </form>
-        
-      
+              </div>
+              <!-- </form> -->
+
+
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  </div>
-  </div>
   </div>
   </div>
 

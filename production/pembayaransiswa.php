@@ -395,14 +395,16 @@
 
                     <?php 
                      
-                        $query = "SELECT 
-                                    tagihan_bebas.idTagihanBebas, jenisbayar.keteranganpos, 
-                                    SUM(detail_tagihan_bebas.nominal) as total_tagihan
-                                  from 
-                                    detail_tagihan_bebas 
-                                  INNER JOIN 
+                        $query = "SELECT
+                                    tagihan_bebas.idTagihanBebas,
+                                    jenisbayar.keteranganpos,
+                                    tagihan_bebas.nominal as total_tagihan,
+                                    IFNULL(SUM(detail_tagihan_bebas.nominal),0) AS dibayar
+                                  FROM
+                                    detail_tagihan_bebas
+                                  RIGHT JOIN
                                     tagihan_bebas
-                                  ON 
+                                  ON
                                     tagihan_bebas.idTagihanBebas = detail_tagihan_bebas.idTagihanBebas
                                   INNER JOIN
                                     jenisbayar
@@ -417,14 +419,14 @@
                           $no = 1;
                           while ($bebas = $ambil->fetch_assoc()) { 
 
-                              $ambil2 = $koneksi->query("SELECT IFNULL(SUM(nominal), 0) as dibayar from detail_tagihan_bebas WHERE idTagihanBebas = $bebas[idTagihanBebas] AND detail_tagihan_bebas.status = 'LUNAS'");
+                              // $ambil2 = $koneksi->query("SELECT IFNULL(SUM(nominal), 0) as dibayar from detail_tagihan_bebas WHERE idTagihanBebas = $bebas[idTagihanBebas] AND detail_tagihan_bebas.status = 'LUNAS'");
 
-                              $detail = $ambil2->fetch_assoc();
+                              // $detail = $ambil2->fetch_assoc();
 
                               $status_bayar = "";
-                              if ($bebas['total_tagihan'] == $detail['dibayar']) {
+                              if ($bebas['total_tagihan'] == $bebas['dibayar']) {
                                 $status_bayar = "LUNAS";
-                              }elseif ($detail['dibayar'] < $bebas['total_tagihan']&& $detail['dibayar'] != 0){
+                              }elseif ($bebas['dibayar'] < $bebas['total_tagihan']&& $bebas['dibayar'] != 0){
                                 $status_bayar = "BELUM LENGKAP";
                               }else{
                                 $status_bayar ="BELUM BAYAR";
@@ -434,7 +436,7 @@
                               <td><?php echo $no; ?></td>
                               <td><?php echo $bebas['keteranganpos'] ?></td>
                               <td><?php echo $bebas['total_tagihan'] ?></td>
-                              <td><?php echo $detail['dibayar'] ?></td>
+                              <td><?php echo $bebas['dibayar'] ?></td>
                               <td><?php echo $status_bayar ?></td>
                               <td>
                                 <a href="bayarbebas.php?tagihanbebas=<?php echo $bebas['idTagihanBebas']?>" class="btn btn-danger btn-xs"><i class="fa fa-plus"></i> Bayar</a>

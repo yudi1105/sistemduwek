@@ -372,16 +372,16 @@
 
                                     if ($ambilcek['cek'] == 0) {
                                       //insert table tagihan bulanan
-                                      $koneksi->query("INSERT INTO tagihan_bebas (idJenisBayar, nis)
-                                                        VALUES ($_GET[id], $siswa[nis])");
+                                      $koneksi->query("INSERT INTO tagihan_bebas (idJenisBayar, nis, nominal)
+                                                        VALUES ($_GET[id], $siswa[nis], $_POST[besartagihan])");
 
 
                                     //ambil data tagihan bulanan terakhir
-                                    $tagihan_bebas = $koneksi->query("SELECT MAX(idTagihanBebas) as idTagihanBebas FROM tagihan_bebas")->fetch_assoc();
+                                    // $tagihan_bebas = $koneksi->query("SELECT MAX(idTagihanBebas) as idTagihanBebas FROM tagihan_bebas")->fetch_assoc();
 
                                     //insert table detail tagihan bulanan
-                                    $koneksi->query("INSERT INTO detail_tagihan_bebas (idTagihanBebas,nominal)
-                                                      VALUES ($tagihan_bebas[idTagihanBebas],$_POST[besartagihan])");
+                                    // $koneksi->query("INSERT INTO detail_tagihan_bebas (idTagihanBebas,nominal)
+                                    //                   VALUES ($tagihan_bebas[idTagihanBebas],$_POST[besartagihan])");
                                     }else{
                                       continue;
                                     }
